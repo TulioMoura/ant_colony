@@ -102,13 +102,14 @@ let ant = {
         if(this.comida == true){
             env[this.posX][this.posY].ferB++
             f1 = this.detect_f1;
-            if(f1[0]==true){
-                this.move_to(f1[1],f1[2])
-            }
-            else if(env[this.posX][this.posY].home == true){
+            if(env[this.posX][this.posY].home == true){
                 this.comida = false;
 
             }
+            else if(f1[0]==true){
+                this.move_to(f1[1],f1[2])
+            }
+             
             else{
                 this.move_random()
             }
@@ -173,6 +174,7 @@ function start(agents, env){
             ctx.fillStyle="rgb(2, 2, 20)"
             ctx.fillRect(agents[currentAnt].posX*10, agents[currentAnt].posY*10, 10, 10)
             
+            
             currentAnt++;
         
         
@@ -183,12 +185,19 @@ function start(agents, env){
 function decay(){
     environment.forEach(sbarr => {
         sbarr.forEach(cell => {
-            cell.ferA = cell.ferA - 1;
-            cell.ferB = cell.ferB - 1;
+            if(cell.ferA > 0){
+                cell.ferA = cell.ferA - 1;
+            }
+            if(cell.ferB > 0){
+                cell.ferB = cell.ferB - 1;
+            }
         })
     });
+    renderEnv()
 }
  function renderEnv(){
+    ctx.fillStyle = "rgb(255,255,255)"
+    ctx.fillRect(0,0, 500,500)
     for(let i = 0;i<50;i++){
         for(let j=0;j<50;j++){
             if (environment[i][j].home === true){
@@ -196,19 +205,19 @@ function decay(){
                  ctx.fillRect(i*10, j*10, 10, 10)
             }
             else if (environment[i][j].qtd_alim > 0){
-                ctx.fillStyle="rgba(197, 66, 245,128)"
+                ctx.fillStyle="rgba(197, 66, 245, 1.0)"
                  ctx.fillRect(i*10, j*10, 10, 10)
                 
             }
             else if (environment[i][j].ferA >0){
-                ctx.fillStyle="rgba(245, 156, 242,128)"
+                ctx.fillStyle=`rgba(245, 156, 242,${environment[i][j].ferA/5})`
                  ctx.fillRect(i*10, j*10, 10, 10)
-                 console.log("fera")
+                 //console.log("fera")
             }
             else if (environment[i][j].ferB >0){
-                ctx.fillStyle ="rgba(245, 242, 66,128)"
+                ctx.fillStyle =`rgba(245, 242, 66,${environment[i][j].ferB/5})`
                  ctx.fillRect(i*10, j*10, 10, 10)
-                 console.log("ferb")
+                 //console.log("ferb")
             }
             
 
@@ -282,5 +291,6 @@ idInterval = setInterval(start,1,ants,environment)
 function stop(id){
     clearInterval(id)
 }
-setInterval(renderEnv, 100)
-setInterval(decay,2000)
+gotoHome(25,25)
+setInterval(renderEnv, 500)
+setInterval(decay,3000)
