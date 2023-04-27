@@ -205,7 +205,7 @@ function decay(){
                  ctx.fillRect(i*10, j*10, 10, 10)
             }
             else if (environment[i][j].qtd_alim > 0){
-                ctx.fillStyle="rgba(197, 66, 245, 1.0)"
+                ctx.fillStyle="rgba(0, 66, 245, 1.0)"
                  ctx.fillRect(i*10, j*10, 10, 10)
                 
             }
