@@ -246,7 +246,7 @@ renderEnv()
                  ctx.fillRect(i*10, j*10, 10, 10)
             }
             else if (environment[i][j].qtd_alim > 0){
-                ctx.fillStyle="rgb(197, 66, 245)"
+                ctx.fillStyle="rgb(0, 0, 245)"
                  ctx.fillRect(i*10, j*10, 10, 10)
                 
             }
